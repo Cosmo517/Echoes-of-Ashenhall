@@ -1,0 +1,16 @@
+{
+  "scene_id": "intro",
+  "level": "1",
+  "text": "You awaken",
+  "choices": [
+    {
+      "text": "Choice 1",
+      "next_scene": "test_scene",
+      "set_flags": { "scene_progress": true }
+    },
+    {
+      "text": "Choice 2",
+      "next_scene": "test_scene"
+    }
+  ]
+}

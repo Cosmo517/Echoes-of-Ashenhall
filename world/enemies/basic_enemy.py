@@ -11,7 +11,12 @@ class Enemy:
 
     def basic_attack(self):
         """Basic attack for an enemy"""
-        pass
+        raise Exception(f"Basic Attack not implemented for enemy {self.name}")
+
+
+    def decide_action(self):
+        """Decides the action  for the enemy"""
+        raise Exception(f"Decide action not implemented for enemy {self.name}")
 
     def get_display_char(self):
         """Returns the display character for an enemy"""

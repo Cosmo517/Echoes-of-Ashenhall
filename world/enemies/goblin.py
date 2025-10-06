@@ -10,5 +10,5 @@ class Goblin(Enemy):
     def basic_attack(self):
         pass
 
-    def movement(self):
+    def decide_action(self):
         pass
