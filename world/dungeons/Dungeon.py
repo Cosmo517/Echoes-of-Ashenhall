@@ -1,4 +1,5 @@
 from world.common.tile import Tile
+from world.enemies.goblin import Goblin
 import random
 import os
 
@@ -56,9 +57,9 @@ class Dungeon:
     def generate_enemy(self):
         """Handles generating a single enemy (goblin) within the dungeon"""
         while True:
-            pos_x = random.randint(1, self.maze_width - 1)
-            pos_y = random.randint(1, self.maze_height - 1)
-            if not self.dungeon_map[pos_y][pos_x].has_entity() and not self.dungeon_map[pos_y][pos_x].is_wall():
+            pos_x = random.randint(1, self.dungeon_width - 1)
+            pos_y = random.randint(1, self.dungeon_height - 1)
+            if not self.dungeon_map[pos_y][pos_x].has_entity() and self.dungeon_map[pos_y][pos_x].can_enemy_walk():
                 break
         enemy = Goblin()
         enemy_info = [enemy, pos_x, pos_y]
@@ -66,7 +67,7 @@ class Dungeon:
         self.dungeon_map[pos_y][pos_x].set_entity(enemy)
         self.dungeon_map[pos_y][pos_x].set_display_char(enemy.get_display_char())
         os.system('cls')
-        self.print_map()
+        self.print_dungeon()
 
     def handle_player_movement(self, key_pressed):
         """Handle the movement of the player when they press a related key"""
@@ -77,7 +78,7 @@ class Dungeon:
             new_x, new_y = self.player_pos_x + move_x, self.player_pos_y + move_y
 
         if (0 <= new_y < self.dungeon_height and 0 <= new_x < self.dungeon_width and
-                self.dungeon_map[new_y][new_x].get_player_walkable()):
+                self.dungeon_map[new_y][new_x].get_player_walkable() and not self.dungeon_map[new_y][new_x].has_entity()):
             user_x, user_y = self.player_pos_x, self.player_pos_y
             self.dungeon_map[user_y][user_x].set_display_char(' ')
             self.dungeon_map[user_y][user_x].set_entity(None)
@@ -97,23 +98,27 @@ class Dungeon:
 
             new_x = enemy.movement_modifier * move_x + pos_x
             new_y = enemy.movement_modifier * move_y + pos_y
-            if not self.dungeon_map[new_y][new_x].has_entity() and not self.dungeon_map[new_y][new_x].is_wall():
+            if not self.dungeon_map[new_y][new_x].has_entity() and self.dungeon_map[new_y][new_x].get_enemy_walkable():
                 enemy_info[1] = new_x
                 enemy_info[2] = new_y
                 break
+            elif new_x == self.player_pos_x and new_y == self.player_pos_y:
+                self.player_character.hit(enemy.basic_attack())
+                break
             attempts += 1
 
-        if (0 <= new_y < self.maze_height and 0 <= new_x < self.maze_width and
-           not self.dungeon_map[new_y][new_x].is_wall() and self.dungeon_map[new_y][new_x].get_walkable()):
+        if (0 <= new_y < self.dungeon_height and 0 <= new_x < self.dungeon_width and
+                self.dungeon_map[new_y][new_x].get_enemy_walkable() and not self.dungeon_map[new_y][new_x].has_entity()):
             self.dungeon_map[pos_y][pos_x].set_display_char(' ')
             self.dungeon_map[pos_y][pos_x].set_entity(None)
             self.dungeon_map[new_y][new_x].set_display_char(enemy.get_display_char())
             self.dungeon_map[new_y][new_x].set_entity(enemy)
+
 
     def handle_enemy_actions(self):
         """Handle enemy actions, such as movement, attacks"""
         for i in range(len(self.enemies)):
             self.handle_enemy_movement(self.enemies[i])
         os.system('cls')
-        self.print_map()
+        self.print_dungeon()
         print(self.enemies)

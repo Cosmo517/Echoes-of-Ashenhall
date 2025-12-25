@@ -2,5 +2,5 @@
   "scene_id": "test_scene",
   "level": "1",
   "text": "Test text",
-  "choices": [{ "text": "Continue", "next_scene": "end" }]
+  "choices": [{ "text": "Continue", "next_level": "2", "next_scene": "end" }]
 }

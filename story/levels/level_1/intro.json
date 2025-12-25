@@ -1,16 +1,23 @@
 {
-  "scene_id": "intro",
-  "level": "1",
-  "text": "You awaken",
-  "choices": [
-    {
-      "text": "Choice 1",
-      "next_scene": "test_scene",
-      "set_flags": { "scene_progress": true }
-    },
-    {
-      "text": "Choice 2",
-      "next_scene": "test_scene"
-    }
-  ]
+    "scene_id": "intro",
+    "level": "1",
+    "text": "You awaken",
+    "choices": [
+        {
+            "text": "Continue Story",
+            "action": {
+                "type": "story",
+                "next_level": "1",
+                "next_scene": "test_scene",
+                "set_flags": { "scene_progress": true }
+            }
+        },
+        {
+            "text": "Go to Dungeon",
+            "action": {
+                "type": "enter_dungeon",
+                "dungeon_id": "catacombs_1"
+            }
+        }
+    ]
 }

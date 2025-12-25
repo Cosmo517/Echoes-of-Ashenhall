@@ -1,18 +1,38 @@
 from player.warrior import Warrior
-from world.dungeons.Dungeon import Dungeon
-import keyboard
+from game_context import GameContext
+from game_manager import GameManager
+from systems.combat_system import CombatSystem
+from systems.dungeon_manager import DungeonManager
+from systems.input_system import InputSystem
+from systems.logging_system import LoggingSystem
+from systems.render_system import RenderSystem
+from systems.story_manager import StoryManager
+from event_bus import EventBus
+
+game_context = GameContext()
 
 player_character = Warrior("test")
 
-test_maze = Dungeon(20, 20)
-test_maze.enter_dungeon(player_character)
-test_maze.print_dungeon()
+event_bus = EventBus(game_context)
+game_context.event_bus = event_bus
 
-moves = ['w', 'a', 's', 'd']
+logging_system = LoggingSystem(game_context)
+game_context.loggingSystem = logging_system
 
-# Simple game loop for capturing player input
-while True:
-    event = keyboard.read_event()
-    if event.event_type == keyboard.KEY_DOWN:
-        if event.name in moves:
-            test_maze.handle_player_movement(event.name)
+combat_manager = CombatSystem(game_context)
+dungeon_manager = DungeonManager(game_context)
+input_system = InputSystem(game_context)
+render_system = RenderSystem(game_context)
+story_manager = StoryManager(game_context)
+game_manager = GameManager(game_context)
+
+game_context.player = player_character
+game_context.combatManager = combat_manager
+game_context.dungeonManager = dungeon_manager
+game_context.inputSystem = input_system
+game_context.renderSystem = render_system
+game_context.storyManager = story_manager
+game_context.gameManager = game_manager
+
+
+game_context.gameManager.start_game()

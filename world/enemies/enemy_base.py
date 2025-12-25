@@ -1,4 +1,4 @@
-class Enemy:
+class EnemyBase:
     def __init__(self, name='test', hp=5, armor_class=5):
         self.name = name
         self.display_char = '%'
