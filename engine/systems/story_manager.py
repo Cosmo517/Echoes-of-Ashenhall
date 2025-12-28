@@ -34,7 +34,7 @@ class StoryManager:
                     
                     scene_id = f"{mod.id}:{data["scene_id"]}"
                     self.scenes[scene_id] = Scene(data, mod.id)
-        self.context.loggingSystem.log_info(f"All scenes: []")
+        self.context.loggingSystem.log_info(f"All scenes: [{self.scenes}]")
         
     def resolve_scene_id(self, next_scene_id):
         if ":" in next_scene_id:
