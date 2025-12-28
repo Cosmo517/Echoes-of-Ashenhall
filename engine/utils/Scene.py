@@ -1,10 +1,11 @@
 class Scene:
-    def __init__(self, scene_json):
+    def __init__(self, scene_json, mod_id):
         self.scene_id = scene_json["scene_id"]
         self.level = scene_json["level"]
         self.text = scene_json["text"]
         self.choices = scene_json["choices"]
-    
+        self.mod_id = mod_id
+
     def get_scene_id(self):
         return self.scene_id
     
@@ -35,3 +36,9 @@ class Scene:
 
     def get_next_scene(self, choice):
         return self.choices[choice]["action"]["next_scene"]
+    
+    def get_action_type(self, choice):
+        return self.choices[choice]["action"]["type"]
+    
+    def get_action(self, choice):
+        return self.choices[choice]["action"]

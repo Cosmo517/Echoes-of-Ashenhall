@@ -1,0 +1,13 @@
+{
+    "scene_id": "end_scene",
+    "level": "1",
+    "text": "The last scene",
+    "choices": [
+        {
+            "text": "The final scene",
+            "action": {
+                "type": "end_game"
+            }
+        }
+    ]
+}

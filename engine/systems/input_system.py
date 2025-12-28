@@ -17,7 +17,7 @@ class InputSystem:
                     continue
 
                 if self.context.state == "story":
-                    self.context.event_bus.emit("story_choice_made", {"input": event.name})
+                    self.context.event_bus.emit("ACTION", {"input": event.name})
                     continue
                 
                 self.context.event_bus.emit("player_input", {"input": event.name})
