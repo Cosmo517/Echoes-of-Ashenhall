@@ -7,8 +7,8 @@
             "text": "Continue",
             "action": {
                 "type": "story",
-                "next_level": "2",
-                "next_scene": "end"
+                "next_level": "level_2",
+                "next_scene": "end_scene"
             }
         }
     ]

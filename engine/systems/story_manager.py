@@ -1,6 +1,6 @@
 import os
 import json
-from utils.Scene import Scene
+from engine.utils.Scene import Scene
 
 class StoryManager:
     def __init__(self, context, mods):
@@ -34,6 +34,7 @@ class StoryManager:
                     
                     scene_id = f"{mod.id}:{data["scene_id"]}"
                     self.scenes[scene_id] = Scene(data, mod.id)
+        self.context.loggingSystem.log_info(f"All scenes: []")
         
     def resolve_scene_id(self, next_scene_id):
         if ":" in next_scene_id:
@@ -60,8 +61,8 @@ class StoryManager:
             self.context.inputSystem.stop_input()
         
     def handle_user_story_choice(self, user_choice_adjusted):
-        # self.context.event_bus.emit("add_text", {"display_text": f"You selected choice: [{user_choice_num}]"})
-        self.context.current_level = self.current_scene.get_next_level(user_choice_adjusted)
+        next_level = self.current_scene.get_next_level(user_choice_adjusted)
+        self.context.current_level = next_level
         next_scene = self.current_scene.get_next_scene(user_choice_adjusted)
         resolved = self.resolve_scene_id(next_scene)
 
@@ -70,7 +71,6 @@ class StoryManager:
             {"load_scene": {"scene": resolved}}
         )
         
-    
     
     def load_scene(self, scene_id: str):
         if scene_id not in self.scenes:
@@ -93,7 +93,6 @@ class StoryManager:
             )
 
         
-    
     def handle_load_scene(self, choice: dict):
         data = choice.get("load_scene")
         if not data:

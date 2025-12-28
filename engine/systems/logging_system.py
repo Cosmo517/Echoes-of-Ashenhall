@@ -4,7 +4,7 @@ from datetime import datetime
 from pathlib import Path
 
 class LoggingSystem:
-    def __init__(self, context=None, log_dir="logs", log_file="debug.log"):
+    def __init__(self, context=None, log_dir="engine/logs", log_file="debug.log"):
         self.context = context
 
         Path(log_dir).mkdir(parents=True, exist_ok=True)

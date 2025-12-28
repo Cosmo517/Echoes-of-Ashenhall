@@ -7,7 +7,7 @@
             "text": "Continue Story",
             "action": {
                 "type": "story",
-                "next_level": "1",
+                "next_level": "level_1",
                 "next_scene": "test_scene",
                 "set_flags": { "scene_progress": true }
             }

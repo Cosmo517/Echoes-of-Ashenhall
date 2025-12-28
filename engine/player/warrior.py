@@ -1,4 +1,4 @@
-from player.player import Player
+from engine.player.player import Player
 import random
 
 class Warrior(Player):
