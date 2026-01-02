@@ -1,0 +1,10 @@
+{
+    "id": "spirit",
+    "name": "Spirit",
+    "health": 5,
+    "armor": 2,
+    "attacks": {
+        "Withering Touch": { "min_damage": 2, "max_damage": 4, "chance": 5 }
+    },
+    "loot_table": { "gold": { "amount": 10, "chance": 0.1 } }
+}

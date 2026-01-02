@@ -1,26 +1,25 @@
 class Tile:
-    def __init__(self, display_char=' ', item=None, entity=None):
+    def __init__(self, display_char=' ', walkable=True, item=None, entity=None):
         self.display_char = display_char
         self.item = item
         self.entity = entity
+        
         # Can the player/enemy walk on this tile
-        self.player_walkable = True
-        self.enemy_walkable = True
-
-    def can_player_walk(self):
-        """Checks to see if a player can walk on this tile"""
-        return self.player_walkable
+        self.walkable = walkable
+        
+    def is_walkable(self):
+        return self.walkable
     
-    def can_enemy_walk(self):
-        """Checks to see if an enemy can walk on this tile"""
-        return self.enemy_walkable
+    def set_walkable(self, walkable):
+        self.walkable = walkable
+    
+    def set_wall(self):
+        self.walkable = False
+        self.display_char = "#"
 
     def has_entity(self):
         """Returns true if an entity is on the tile"""
-        if self.entity:
-            return True
-        else:
-            return False
+        return True if self.entity else False
     
     def get_display_char(self):
         """Returns the display character of the tile"""
@@ -33,12 +32,6 @@ class Tile:
     def get_entity(self):
         """Returns the entity on the tile"""
         return self.entity if self.entity else None
-    
-    def get_player_walkable(self):
-        return self.player_walkable
-    
-    def get_enemy_walkable(self):
-        return self.enemy_walkable
 
     def set_display_char(self, new_char):
         """Sets the display character of a tile"""
@@ -55,13 +48,3 @@ class Tile:
             self.walkable = False
         else:
             self.walkable = True
-            
-    def set_player_walkable(self, walk):
-        self.player_walkable = walk
-    
-    def set_enemy_walkable(self, walk):
-        self.enemy_walkable = walk
-    
-    def set_walkable(self, walk):
-        self.player_walkable = walk
-        self.enemy_walkable = walk

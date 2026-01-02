@@ -8,16 +8,16 @@ class EventBus:
         if event_name not in self.subscribers:
             self.subscribers[event_name] = []
         owner = callback.__self__.__class__.__name__
-        self.context.loggingSystem.log_event_subscribe(event_name, owner)
+        self.context.logging_system.log_event_subscribe(event_name, owner)
         self.subscribers[event_name].append(callback)
     
     def emit(self, event_name, data=None):
         """Tell all listeners that this event happened"""
-        self.context.loggingSystem.log_event_emit(event_name, data)
+        self.context.logging_system.log_event_emit(event_name, data)
         if event_name not in self.subscribers:
             return
         
         for callback in self.subscribers[event_name]:
             owner = callback.__self__.__class__.__name__
-            self.context.loggingSystem.log_event_dispatch(owner, event_name)
+            self.context.logging_system.log_event_dispatch(owner, event_name)
             callback(data)

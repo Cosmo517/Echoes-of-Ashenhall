@@ -23,6 +23,11 @@ class ModLoader:
         self._ensure_base_mod()
         return self.mods
 
+    def get_mod(self, mod_id):
+        for mod in self.mods:
+            if mod.id == mod_id:
+                return mod
+
     def _ensure_base_mod(self):
         if not any(mod.id == "base" for mod in self.mods):
             raise RuntimeError("Base mod is required but was not found")

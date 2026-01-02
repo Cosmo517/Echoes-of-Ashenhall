@@ -1,13 +1,11 @@
 {
     "scene_id": "intro",
-    "level": "1",
     "text": "You awaken",
     "choices": [
         {
             "text": "Continue Story",
             "action": {
                 "type": "story",
-                "next_level": "level_1",
                 "next_scene": "test_scene",
                 "set_flags": { "scene_progress": true }
             }
@@ -16,7 +14,7 @@
             "text": "Go to Dungeon",
             "action": {
                 "type": "enter_dungeon",
-                "dungeon_id": "catacombs_1"
+                "dungeon_id": "vault"
             }
         }
     ]

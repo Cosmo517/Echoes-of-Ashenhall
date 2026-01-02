@@ -8,6 +8,12 @@ class GameManager:
     def __init__(self, context):
         self.context = context
         
+        self.state = "story"
+        self.current_scene = "intro"
+        self.current_level = "1"
+        self.flags = {}
+        self.inventory = []
+        
         self.handle_subscription()
     
     def handle_subscription(self):
@@ -28,7 +34,7 @@ class GameManager:
     
     def start_game(self):
         # for now use this start from beginning
-        if self.context.state == "story":
+        if self.context.game_manager.state == "story":
             # lets load intro
             new_state = {"level": 1, "scene": "intro"}
             self.context.event_bus.emit("story_load_scene", {"load_scene": new_state})
@@ -45,16 +51,19 @@ class GameManager:
         return gm
     
     def switch_state(self, new_state):
+        if self.state == new_state:
+            return
         self.state = new_state
         self.context.event_bus.emit("state_changed", {"state": new_state})
     
     def enter_dungeon(self, data):
-        self.state = "dungeon"
-        pass
+        dungeon_id = data["dungeon_id"]
+        self.switch_state("dungeon")
+        self.context.dungeonManager.player_entered({"dungeon_id": dungeon_id})
 
     def exit_dungeon(self, data):
-        self.state = "story"
-        pass
+        self.switch_state("story")
+        self.context.dungeonManager.player_exited()
     
     def story_choice(self, data):
         pass

@@ -8,6 +8,8 @@ class InputSystem:
         self.input_thread = threading.Thread(target=self.handle_input)
         self.start_input()
     
+    # TODO: Instead of using input like below for story choices. Input should 
+    # be standard python input() so the user can "confirm" their choice for story sequences
     def handle_input(self):
         while self.run_input:
             event = keyboard.read_event()
@@ -16,9 +18,14 @@ class InputSystem:
                     self.stop_input()
                     continue
 
-                if self.context.state == "story":
+                # Handles player choices during story
+                if self.context.game_manager.state == "story":
                     self.context.event_bus.emit("ACTION", {"input": event.name})
                     continue
+                
+                # Handle player movement during dungeon sequence
+                if self.context.game_manager.state == "dungeon":
+                    self.context.event_bus.emit("dungeon_player_movement", {"input": event.name})
                 
                 self.context.event_bus.emit("player_input", {"input": event.name})
     

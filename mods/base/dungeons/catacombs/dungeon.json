@@ -1,0 +1,15 @@
+{
+    "id": "catacombs",
+    "name": "The Catacombs",
+    "size": [20, 20],
+    "mobs": { "base:spirit": 2 },
+
+    "exit": {
+        "type": "story",
+        "next_scene": "test_scene"
+    },
+
+    "generator": {
+        "type": "default"
+    }
+}

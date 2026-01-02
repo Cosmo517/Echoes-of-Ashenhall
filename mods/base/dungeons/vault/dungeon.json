@@ -1,0 +1,16 @@
+{
+    "id": "vault",
+    "name": "The Catacombs",
+    "size": [20, 20],
+    "mobs": { "base:goblin": 2 },
+
+    "exit": {
+        "type": "enter_dungeon",
+        "dungeon_id": "catacombs"
+    },
+
+    "generator": {
+        "type": "lua",
+        "script": "dungeons/vault/vault_gen.lua"
+    }
+}
